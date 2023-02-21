@@ -1,0 +1,380 @@
+/*
+Author:Eugene John Mones
+Creation Date: October 27 2020
+Modification Date: October 29
+Purpose: Project 01: Calculator app
+This project is coded in C++
+*/
+ 
+#include <string>
+#include <iostream>
+#include <iomanip>
+using namespace std;
+ 
+void showCommands() {
+ 
+ 
+    cout << "A: Addition" << endl;
+    cout << "B: Subtraction" << endl;
+    cout << "C: Multiplication" << endl;
+    cout << "D: Division" << endl;
+    cout << "E: Roots (Accepts only positive numbers)" << endl;
+    cout << "F: Power (Accepts only positive numbers)" << endl;
+    cout << "G: Percentage" << endl;
+    cout << "H: Least Common Multiplier" << endl;
+    cout << "I: Greatest Common Divisor" << endl;
+    cout << "J: Modulus" << endl;
+    cout << "K: Display function execution*" << endl;
+    cout << "Q: Quit" << endl;
+    cout << "----------------------------------------------------------------------" << endl;
+}
+ 
+/*
+Author:Eugene John Mones
+Creation Date: October 29
+Modification Date: October 29
+Purpose: To compute the 2 given numbers.
+*/
+float ComputeSum(float num1, float num2) {
+    float resultNum;
+    resultNum = num1 + num2;
+    
+    return resultNum;
+ 
+}
+ 
+/*
+Author:Eugene John Mones
+Creation Date: October 27
+Modification Date: October 29
+Purpose: Computes the difference between 2 numbers
+*/
+float ComputeSub(float num1, float num2) {
+    float resultNum;
+    resultNum = num1 - num2;
+ 
+    return resultNum;
+ 
+}
+/*
+Author:Eugene John Mones
+Creation Date: October 27
+Modification Date: October 29
+Purpose:Computes product of two numbers
+*/
+float ComputeMul(float num1, float num2) {
+    float resultNum;
+    resultNum = num1 * num2;
+ 
+    return resultNum;
+ 
+}
+ 
+/*
+Author:Eugene John Mones
+Creation Date: October 27
+Modification Date: October 29
+Purpose: Computes quotient of 2 numbers
+*/
+float ComputeDiv(float num1, float num2) {
+    float resultNum;
+    resultNum = num1 / num2;
+ 
+    return resultNum;
+ 
+}
+ 
+/*
+Author:Eugene John Mones
+Creation Date: October 27
+Modification Date: October 29
+Purpose: computes x number to the power of n number
+*/
+float computePower(float x, int n)
+{
+    float numProduct = 1.0;
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        numProduct *= x;
+    }
+    return numProduct;
+}
+ 
+/*
+Author:Eugene John Mones
+Creation Date: October 29
+Modification Date: October 29
+Purpose: Computes root number rooted by index
+*/
+float computeRoot(float root, int index)
+{
+    float tp, mid, low = 0.0, high = root;
+ 
+    do {
+        mid = (low + high) / 2;
+        if (computePower(mid, index) > root)
+        {
+            high = mid;
+        }
+        else {
+            low = mid;
+        }
+        mid = (low + high) / 2;
+        tp = (computePower(mid, index) - root);
+ 
+        if (tp < 0)
+        {//grab absolute value 
+            tp = -tp;
+        }
+    }
+    while (tp > .00005);//accuracy of our root 
+    return mid;
+ 
+}
+ 
+/*
+Author:Eugene John Mones
+Creation Date: October 29
+Modification Date: October 29
+Purpose: Computes the percentage of num1 of num2
+*/
+float computePerc(float num1, float perc) {
+    float resultNum;
+    resultNum = (num1 / perc) * 100;
+ 
+    return resultNum;
+}
+ 
+/*
+Author:Eugene John Mones
+Creation Date: October 29
+Modification Date: October 29
+Purpose: Finds the greatest common denominator of two integers.
+*/
+int computeGCD(int a, int b)
+{
+ 
+    while (a != b)
+    {
+        if (a > b)
+            a -= b;
+        else
+            b -= a;
+    }
+    return a;
+}
+ 
+/*
+Author:Eugene John Mones
+Creation Date: October 29
+Modification Date: October 29
+Purpose: Computes computes the least common multiple of two numbers.
+*/
+int computeLCM(int a, int b)
+ 
+{
+ 
+    int tmp_lcm; 
+ 
+    tmp_lcm = ((a * b) / computeGCD(a, b)); 
+ 
+    return tmp_lcm; 
+ 
+}
+ 
+/*
+Author:Eugene John Mones
+Creation Date: October 29
+Modification Date: October 29
+Purpose: Computes what remains of the quotient after integer num1 is divided by integer num2.
+*/
+int computeMod(int num1, int num2) {
+    int resultVal;
+    resultVal = num1 % num2;
+    return resultVal;
+}
+ 
+/*
+Author:Eugene John Mones
+Creation Date: October 29
+Modification Date: October 27
+Purpose: Allows the user to input their numbers and uses the previously inputted letter to use the submitted operation.
+*/
+char Menu(char userLetter) {
+    float firstNum;
+    float secondNum;
+ 
+    if (userLetter != 'q' && userLetter != 'Q') {
+ 
+        cout << "Please enter your first number: ";
+        cin >> firstNum;
+        cout << endl;
+        cout << "Please enter your second number: ";
+        cin >> secondNum;
+        cout << endl;
+ 
+    }
+ 
+    switch (userLetter)
+    {
+        case 'a': //Add
+        case 'A': cout << "Results: " << firstNum << " + " << secondNum << " = " << ComputeSum(firstNum, secondNum) << endl;
+            break;
+        case 'b': //Subt
+        case 'B': cout << "Results: " << firstNum << " - " << secondNum << " = " << ComputeSub(firstNum, secondNum) << endl;
+            break;
+        case 'c': //Mult
+        case 'C': cout << "Results: " << firstNum << " * " << secondNum << " = " << ComputeMul(firstNum, secondNum) << endl;
+            break;
+        
+        case 'd': //Division
+        case 'D': while(secondNum == 0.0)
+        {
+            cout << "Sorry, cannot divide by 0." << endl;
+            cout << "Please enter a new number to divide by: ";
+            cin >> secondNum;
+        }
+            cout << "Results: " << firstNum << " / " << secondNum << " = " << ComputeDiv(firstNum, secondNum) << endl;
+            break;
+        
+        case 'e': //root
+        case 'E': while (firstNum < 0.0)
+        {
+            cout << "Please enter a positive number for your first number." << endl;
+            cin >> firstNum;
+        }
+        while (secondNum < 0.0)
+                {
+                    cout << "Please enter a positive number for your second number." << endl;
+                    cin >> secondNum;
+                }
+            cout << "Results: " << firstNum << " rooted by " << secondNum << " = " << fixed << setprecision(4) << computeRoot(firstNum, secondNum) << endl;
+            //setprecision used to round up or down perfect square numbers.
+            break;
+        
+        case 'f': //power
+        case 'F': while (firstNum < 0.0)
+        {
+            cout << "Please enter a positive number for your first number." << endl;
+            cin >> firstNum;
+        }
+                while (secondNum < 0.0)
+                {
+                    cout << "Please enter a positive number for your second number." << endl;
+                    cin >> secondNum;
+                }
+            cout << "Results: " << firstNum << " ^ " << secondNum << " = " << computePower(firstNum, secondNum) << endl;
+            break;
+ 
+        case 'g': //percentage
+        case 'G': cout << "Results: " << firstNum << " of " << secondNum << " is: " << computePerc(firstNum, secondNum) << "%" << endl;
+            break;
+    
+        case 'h': //LCD
+        case 'H': while (firstNum <= 0.0)
+        {
+            cout << "Please enter a positive number for your first number." << endl;
+            cin >> firstNum;
+        }
+                while (secondNum <= 0.0)
+                {
+                    cout << "Please enter a positive number for your second number." << endl;
+                    cin >> secondNum;
+                }
+            cout << "Results: " << "Least common multiple is " << computeLCM(firstNum, secondNum) << endl;
+            break;
+        
+        case 'i': //GCD
+        case 'I': while (firstNum <= 0.0)
+        {
+            cout << "Please enter a positive number for your first number." << endl;
+            cin >> firstNum;
+        }
+                while (secondNum <= 0.0)
+                {
+                    cout << "Please enter a positive number for your second number." << endl;
+                    cin >> secondNum;
+                }
+ 
+            cout << "Results: " << "Greatest Common Denominator is " << computeGCD(firstNum, secondNum) << endl;
+            break;
+        
+        case 'j': //Modulus
+        case 'J': while (firstNum <= 0.0)
+        {
+            cout << "Please enter a number greater than 0 for your first number." << endl;
+            cin >> firstNum;
+        }
+                while (secondNum <= 0.0)
+                {
+                    cout << "Please enter a number greater than 0 for your second number." << endl;
+                    cin >> secondNum;
+                }
+            cout << "Results: " << "The remainder after the division of " << firstNum << " / " << secondNum << " is " << computeMod(firstNum, secondNum) << endl;
+            break;
+        case 'q': //Quit
+        case 'Q':
+            break;
+        default: cout << "Unknown input, please input a valid letter." << endl;
+            break;
+ 
+    }
+        
+    return userLetter;
+    }
+ 
+    /*
+Author:Eugene John Mones
+Creation Date: October 29
+Modification Date: October 29
+Purpose: Gives the user a nice little message when they're done with the application via a string that is outputted in int main.
+*/
+string ExitMessage() {
+    string str1;
+    str1 = "Goodbye, have a wonderful day!";
+    return str1;
+}
+ 
+/*
+Author:Eugene John Mones
+Creation Date: October 29
+Modification Date: October 29
+Purpose: Welcomes the user upon starting up the application.
+*/
+string WelcomeMessage() {
+    string welcomeMsg;
+    welcomeMsg = "Welcome, and Thank You For Using The Calculator App! \n";
+    return welcomeMsg;
+}
+ 
+/*
+Author:Eugene John Mones
+Creation Date: October 29
+Modification Date: October 29
+Purpose: Starts the user off with their welcome message and allows them to input their desired letter.
+The user's letter is handed to the menu function.
+*/
+int main()
+{
+    cout << "----------------------------------------------------------------------" << endl;
+    cout << "         " << WelcomeMessage();
+    cout << "----------------------------------------------------------------------" << endl;
+    cout << "                    " << "By John Mones" << endl;
+    cout << endl;
+    char userLetter; //user's letter input
+ 
+    do{
+    showCommands(); //displays list of commands to user
+    cout << "Please input a letter to perform a operation." << endl;
+    cin >> userLetter;
+    Menu(userLetter);    
+    }while(userLetter != 'Q' && userLetter != 'q');
+ 
+    cout << endl;
+    cout << ExitMessage() << endl;
+ 
+    system("pause");
+    return 0;
+ 
+}
